@@ -1,24 +1,25 @@
 // =================================================================
 //                         Requires
 // =================================================================
-var express = require('express');
-var app = express();
+var mongoose = require('mongoose');
+
+// =================================================================
+//                        Schema
+// =================================================================
+var Schema = mongoose.Schema;
+
+
+var hospitalSchema = new Schema({
+
+    nombre: { type: String, required: [true, 'El nombre es necesario'] },
+    img: { type: String, required: false },
+    usuario: { type: Schema.Types.ObjectId, ref: 'Usuario' }
+
+    },
+    { collection: 'hospitales' });
 
 
 // =================================================================
-//                           Rutas
+//                           Exports
 // =================================================================
-
-app.get('/', (req, res, next) => {
-
-  res.status(200).json({
-    ok: true,
-    mensaje: 'Petición realizada correctamente.'
-  })
-
-});
-
-// =================================================================
-//                          Exports
-// =================================================================
-module.exports = app;
+module.exports = mongoose.model('Hospital', hospitalSchema);
